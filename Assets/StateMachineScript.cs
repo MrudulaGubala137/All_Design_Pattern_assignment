@@ -12,13 +12,15 @@ public class StateMachineScript : MonoBehaviour
     public float gotoDistance;
     public Transform target;
    // public string playerTag;
-    public float attackTime;
-    public float currentTime;
+   
     PlayerMovement playerMovement;
     public Animator anim;
+   // public GameObject enemy;
+    public Vector3 offSet;
+    float time;
     IEnumerator Start()
     {
-        currentTime = attackTime;
+       
         if(target==null)
         {
             target=GameObject.Find("Player").GetComponent<Transform>();
@@ -72,6 +74,8 @@ public class StateMachineScript : MonoBehaviour
         {
             Debug.Log("Attacking");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, enemySpeed * Time.deltaTime);
+            
+        
         }
         else
         {
@@ -82,7 +86,17 @@ public class StateMachineScript : MonoBehaviour
     public void Attack()
     {
         anim.SetTrigger("isAttacking");
-      
+    time = time + Time.deltaTime;
+        if (time > 2f)
+        {
+            // GameObject temp=Instantiate(ObjectPoolScript.instance.GetObjectsFromPool("Asteroid"),new Vector3(Random.Range(-8.0f, 8f),4f,0f),Quaternion.identity);
+            GameObject tempFire = ObjectPool.instance.GetObjectsFromPool("Fire");
+            tempFire.SetActive(true);
+            tempFire.transform.position = this.transform.position + offSet;
+
+
+            time = 0;
+        }
         if (Vector3.Distance(target.transform.position, this.transform.position) > attackDistance)
         {
             currentState = STATE.GOTO;

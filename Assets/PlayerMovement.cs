@@ -26,9 +26,26 @@ public class PlayerMovement : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");
 
         transform.Translate(inputX*playerSpeed*Time.deltaTime, inputY * playerSpeed * Time.deltaTime, 0f);
-            //Clamp player position within gameWindow
+        //Clamp player position within gameWindow
+        if (transform.position.y > 4.5f)
+        {
+            transform.position = new Vector3(transform.position.x, 4.5f, 0);
+        }
+        else if (transform.position.y < -4.5f)
+        {
+            transform.position = new Vector3(transform.position.x, -4.5f, 0);
+        }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+        if (transform.position.x > 7.0f)
+        {
+            transform.position = new Vector3(-7.0f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -7.0f)
+        {
+            transform.position = new Vector3(-7.0f, transform.position.y, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
             {
 
                 GameObject tempBullet = ObjectPool.instance.GetObjectsFromPool("Bullet");
