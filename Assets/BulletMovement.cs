@@ -23,6 +23,7 @@ public class BulletMovement : MonoBehaviour
             this.gameObject.SetActive(false);
             collision.gameObject.SetActive(false);
         }
+        
     }
 
 }

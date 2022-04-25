@@ -11,13 +11,18 @@ public class StateMachineScript : MonoBehaviour
     public float attackDistance;
     public float gotoDistance;
     public Transform target;
-    public string playerTag;
+   // public string playerTag;
     public float attackTime;
     public float currentTime;
     PlayerMovement playerMovement;
+    public Animator anim;
     IEnumerator Start()
     {
         currentTime = attackTime;
+        if(target==null)
+        {
+            target=GameObject.Find("Player").GetComponent<Transform>();
+        }
         if (target != null)
         {
             playerMovement = target.GetComponent<PlayerMovement>();
@@ -54,44 +59,63 @@ public class StateMachineScript : MonoBehaviour
         {
             currentState = STATE.GOTO;
         }
+       /* else if(Vector3.Distance(target.transform.position, this.transform.position)<attackDistance)
+        {
+            currentState=STATE.ATTACK;
+        }*/
         print("This is LookForState");
     }
     public void Goto()
     {
+        anim.SetTrigger("isRunning");
         if (Vector3.Distance(target.transform.position, this.transform.position) > attackDistance)
         {
+            Debug.Log("Attacking");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, enemySpeed * Time.deltaTime);
         }
         else
         {
-            currentState = STATE.ATTACK;
+           currentState = STATE.ATTACK;
         }
         print("This is GotoState");
     }
     public void Attack()
     {
-        currentTime = currentTime - Time.deltaTime;
-        if (currentTime < 0f)
-        {
-            playerMovement.health--;
-            print(playerMovement.health);
-            currentTime = attackTime;
-        }
-        if (playerMovement.health < 0)
-        {
-            currentState = STATE.DEAD;
-        }
+        anim.SetTrigger("isAttacking");
+      
         if (Vector3.Distance(target.transform.position, this.transform.position) > attackDistance)
         {
-            currentState = STATE.ATTACK;
+            currentState = STATE.GOTO;
+        }
+        else if(Vector3.Distance(target.transform.position, this.transform.position) > gotoDistance)
+        {
+            currentState |= STATE.LOOKFOR;
         }
         print("This is AttackState");
     }
     public void Dead()
     {
-        print("Game Over!!");
+        anim.SetTrigger("isDead");
+        StartCoroutine(Fade());
+       // this.gameObject.SetActive(false);
+        print("Enemy Dead");
     }
-    
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="Bullet")
+        {
+            collision.gameObject.SetActive(false);
+            Dead();
+        }
+    }
+    IEnumerator Fade()
+    {
+
+        yield return new WaitForSeconds(2f);
+        this.gameObject.SetActive(false);
+    }
+
+
 }
 
 
