@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public int playerSpeed;
     public float health;
     // public GameObject bulletPrefab;
-    
+    public ParticleSystem particle;
+    public ParticleSystem particle1;
     public Vector3 offSet;
     public bool isGameOver = false;
     // Start is called before the first frame update
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
                 GameObject tempBullet = ObjectPool.instance.GetObjectsFromPool("Bullet");
                 tempBullet.transform.position = this.transform.position + offSet;
                 // transform.Translate(0f, 0f, 1f);
+                particle1.Play();
                 tempBullet.SetActive(true);
                 //Instantiate(bulletPrefab, transform.position + offSet, Quaternion.identity);
             }
@@ -60,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         else if(health==0)
         {
             isGameOver = true;
-
+            particle.Play();
             this.gameObject.SetActive(false);
 
         }
