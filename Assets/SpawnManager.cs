@@ -18,8 +18,8 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      /*  if (!PlayerMovement.isGameOver)
-        {*/
+       if (!PlayerMovement.isGameOver)
+        {
            
             enemyTime=enemyTime + Time.deltaTime;
             if(enemyTime>8f)
@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
                      tempEnemy.SetActive(true);
                      enemyTime = 0;
                  }
-            //}
+            }
            
         }
 

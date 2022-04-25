@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     // public GameObject bulletPrefab;
     
     public Vector3 offSet;
-    //public bool isGameOver = false;
+    public bool isGameOver = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,31 +21,33 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (health > 0&& isGameOver==false)
+        {
+
             float inputY = Input.GetAxis("Vertical");
-        float inputX = Input.GetAxis("Horizontal");
+            float inputX = Input.GetAxis("Horizontal");
 
-        transform.Translate(inputX*playerSpeed*Time.deltaTime, inputY * playerSpeed * Time.deltaTime, 0f);
-        //Clamp player position within gameWindow
-        if (transform.position.y > 4.5f)
-        {
-            transform.position = new Vector3(transform.position.x, 4.5f, 0);
-        }
-        else if (transform.position.y < -4.5f)
-        {
-            transform.position = new Vector3(transform.position.x, -4.5f, 0);
-        }
+            transform.Translate(inputX * playerSpeed * Time.deltaTime, inputY * playerSpeed * Time.deltaTime, 0f);
+            //Clamp player position within gameWindow
+            if (transform.position.y > 4.5f)
+            {
+                transform.position = new Vector3(transform.position.x, 4.5f, 0);
+            }
+            else if (transform.position.y < -4.5f)
+            {
+                transform.position = new Vector3(transform.position.x, -4.5f, 0);
+            }
 
-        if (transform.position.x > 7.0f)
-        {
-            transform.position = new Vector3(-7.0f, transform.position.y, 0);
-        }
-        else if (transform.position.x < -7.0f)
-        {
-            transform.position = new Vector3(-7.0f, transform.position.y, 0);
-        }
+            if (transform.position.x > 7.0f)
+            {
+                transform.position = new Vector3(-7.0f, transform.position.y, 0);
+            }
+            else if (transform.position.x < -7.0f)
+            {
+                transform.position = new Vector3(-7.0f, transform.position.y, 0);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
 
                 GameObject tempBullet = ObjectPool.instance.GetObjectsFromPool("Bullet");
@@ -55,13 +57,21 @@ public class PlayerMovement : MonoBehaviour
                 //Instantiate(bulletPrefab, transform.position + offSet, Quaternion.identity);
             }
         }
-        
-            
+        else if(health==0)
+        {
+            isGameOver = true;
+
+            this.gameObject.SetActive(false);
+
+        }
+
+    }  
     
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Fire")
         {
+            health--;
             collision.gameObject.SetActive(false);
            print("player Health Dec:" + health);
 
