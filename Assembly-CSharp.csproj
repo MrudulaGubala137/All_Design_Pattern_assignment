@@ -53,13 +53,14 @@
     <UnityVersion>2020.3.26f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\FireMovement.cs" />
+    <Compile Include="Assets\OnInvisible.cs" />
+    <Compile Include="Assets\SpawnManager.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\ObjectPool.cs" />
-    <Compile Include="Assets\SpawnManager.cs" />
-    <Compile Include="Assets\BulletMovement.cs" />
-    <Compile Include="Assets\OnInvisible.cs" />
-    <Compile Include="Assets\FireMovement.cs" />
     <Compile Include="Assets\StateMachineScript.cs" />
+    <Compile Include="Assets\BulletMovement.cs" />
+    <Compile Include="Assets\ConvertMinutes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dragon Warrior Files\Read Me.txt" />

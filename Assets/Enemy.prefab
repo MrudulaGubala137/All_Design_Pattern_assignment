@@ -155,9 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  enemySpeed: 10
+  enemySpeed: 2
   attackDistance: 3
   gotoDistance: 3
   target: {fileID: 0}
   anim: {fileID: 7885118381128843609}
-  offSet: {x: -1.5, y: 0, z: 0}
+  offSet: {x: -1.5, y: -0.5, z: 0}

@@ -20,40 +20,42 @@ public class StateMachineScript : MonoBehaviour
     float time;
     IEnumerator Start()
     {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
        
-        if(target==null)
-        {
-            target=GameObject.Find("Player").GetComponent<Transform>();
-        }
-        if (target != null)
-        {
-            playerMovement = target.GetComponent<PlayerMovement>();
-
-        }
-        while (true)
-        {
-            switch (currentState)
+            if (target == null)
             {
-                case STATE.LOOKFOR:
-                    LookFor();
-
-                    break;
-                case STATE.GOTO:
-                    Goto();
-                    break;
-                case STATE.ATTACK:
-                    Attack();
-                    break;
-                case STATE.DEAD:
-                    Dead();
-                    break;
-                default:
-                    break;
+                target = GameObject.Find("Player").GetComponent<Transform>();
             }
-            yield return null;
-        }
+            if (target != null)
+            {
+                playerMovement = target.GetComponent<PlayerMovement>();
 
-    }
+            }
+            while (true)
+            {
+                switch (currentState)
+                {
+                    case STATE.LOOKFOR:
+                        LookFor();
+
+                        break;
+                    case STATE.GOTO:
+                        Goto();
+                        break;
+                    case STATE.ATTACK:
+                        Attack();
+                        break;
+                    case STATE.DEAD:
+                        Dead();
+                        break;
+                    default:
+                        break;
+                }
+                yield return null;
+            }
+
+        }
+    
 
     public void LookFor()
     {
@@ -74,7 +76,6 @@ public class StateMachineScript : MonoBehaviour
         {
             Debug.Log("Attacking");
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, enemySpeed * Time.deltaTime);
-            
         
         }
         else
@@ -128,8 +129,9 @@ public class StateMachineScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
         this.gameObject.SetActive(false);
     }
+   
+    }
 
 
-}
 
 

@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem particle1;
     public Vector3 offSet;
     public bool isGameOver = false;
+    public AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (health > 0&& isGameOver==false)
         {
-
+            particle.transform.position = this.transform.position;
             float inputY = Input.GetAxis("Vertical");
             float inputX = Input.GetAxis("Horizontal");
 
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
                 GameObject tempBullet = ObjectPool.instance.GetObjectsFromPool("Bullet");
                 tempBullet.transform.position = this.transform.position + offSet;
+                audio.Play();
                 // transform.Translate(0f, 0f, 1f);
                 particle1.Play();
                 tempBullet.SetActive(true);
